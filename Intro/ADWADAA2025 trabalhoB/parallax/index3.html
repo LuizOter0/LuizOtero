@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otero Teste 6</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Gothic&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+
+    <!-- Carregando o script do VLibras -->
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        // Inicializa o widget do VLibras assim que a página for carregada
+        window.onload = function () {
+            new window.VLibras.Widget('https://vlibras.gov.br/app');
+        };
+    </script>
+
+    <div id="fb-root"></div>
+
+    <!-- Imagem de fundo transparente -->
+    <div class="background-image"></div>
+
+    <!-- Imagem de fundo que ocupará a tela toda -->
+    <div class="image-container">
+        <img src="2.jpg" alt="Fundo de ondas japonesas" class="image">
+        <button class="navbar-btn"><a href="index.html" style="text-decoration: none; color: #fff;">Menu</a></button>
+        <div class="site-credit" id="site-credit"></div> <!-- Site credit com id -->
+    </div>
+
+    <!-- Botão para rolar até o final -->
+    <button class="scroll-button" onclick="scrollDown()">
+        <div class="arrow-circle">&#8595;</div>
+    </button>
+
+    <!-- Nova Section com Box de Texto e Foto -->
+    <div class="content-box">
+        <!-- Texto na primeira metade -->
+        <div class="text-half">
+            <h2>Historia do JAPAO</h2>
+            <p>
+                A história do Japão é marcada por transformações profundas ao longo dos séculos.
+                Nos períodos iniciais, como o Jomon e Yayoi, o Japão foi habitado por caçadores-coletores e, mais tarde,
+                passou a adotar a agricultura e o uso de metais. Durante o Período Kofun, o país começou a se organizar
+                sob uma monarquia centralizada. A influência cultural chinesa foi forte no Período Asuka e Nara, com a introdução do Budismo e a criação de um sistema administrativo.
+                No Período Heian, o Japão floresceu culturalmente, mas o poder imperial começou a enfraquecer, dando espaço aos samurais.
+            </p>
+        
+            <!-- Segunda parte do texto, inicialmente oculta -->
+            <div id="more-text" style="display: none;">
+                <p>
+                    O Período Kamakura marcou o início do governo dos xoguns, que perdurou até o Período Edo, quando o Japão
+                    viveu um longo período de paz e isolamento. Porém, no final do Período Edo, o país se abriu ao Ocidente.
+                    O Período Meiji (1868-1912) foi um marco de modernização e industrialização, enquanto o Período Taisho e
+                    o Showa trouxeram desafios econômicos e militares, incluindo a Segunda Guerra Mundial, que resultou em
+                    uma grande reconstrução pós-guerra.
+                    No Período Heisei, o Japão consolidou sua posição como uma potência econômica, mas enfrentou desafios
+                    como desastres naturais e o envelhecimento populacional. Atualmente, no Período Reiwa, o Japão segue
+                    sendo uma das principais potências do mundo, mantendo uma forte influência global.
+                </p>
+            </div>
+        
+            <!-- Botão "Ver Mais" -->
+            <button id="read-more-btn" onclick="toggleText()">Ver Mais</button>
+        </div>
+
+        <!-- Imagem na segunda metade -->
+        <div class="image-half">
+            <img src="jap.jpg" alt="KIOTAO - CIDADE DO JAPAO">
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+    <style>
+        /* Estilo para parágrafos com fonte japonesa */
+        p,
+        .text-half {
+            font-family: 'Noto Sans JP', sans-serif;
+            /* Fonte de estilo japonês */
+            font-size: 18px;
+            color: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://img.freepik.com/vector-premium/fondo-vector-abstracto-geometrico-japones_475148-1149.jpg?w=2000');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .image-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            transition: all 1s ease;
+            border-bottom: 10px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 20 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1s ease, top 1s ease, height 1s ease, border-radius 1s ease;
+            border-radius: 0;
+        }
+
+        .image.expanded {
+            border-radius: 15px;
+        }
+
+        .navbar-btn {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: transparent;
+            color: #fff;
+            font-size: 18px;
+            padding: 12px 24px;
+            border: 2px solid #fff;
+            border-radius: 25px;
+            cursor: pointer;
+            z-index: 1000;
+            display: none;
+        }
+
+        .navbar-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        .site-credit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            color: #b32d00;
+            font-family: 'Sawarabi Gothic', sans-serif;
+            font-weight: bold;
+            display: none;
+        }
+
+        .scroll-button {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .arrow-circle {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: white;
+        }
+
+        .scroll-button.visible {
+            opacity: 1;
+        }
+
+        /* Estilo para a nova box */
+        .content-box {
+            display: flex;
+            width: 100%;
+            height: 50vh;
+            padding: 20px;
+            box-sizing: border-box;
+            justify-content: space-between;
+            margin-top: 20px;
+            /* Aumenta o espaço acima da box */
+            border: 2px solid #ddd;
+            /* Adiciona borda à box */
+            border-radius: 10px;
+            /* Arredonda os cantos */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            /* Adiciona uma sombra leve à box */
+        }
+
+        .text-half {
+            width: 50%;
+            padding-right: 20px;
+            font-family: 'Sawarabi Gothic', sans-serif;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .image-half {
+            width: 50%;
+        }
+
+        .image-half img {
+            width: 70%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .speak-toggle-btn {
+            position: fixed;
+            right: 20px;
+            bottom: 100px;
+            background-color: red;
+            /* Inicialmente, cor vermelha */
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 40px;
+            /* Botão menor com bordas arredondadas */
+            cursor: pointer;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .speak-toggle-btn:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .speak-toggle-btn .audio-icon {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .speak-toggle-btn.active {
+            background-color: green;
+            /* Cor verde quando ativado */
+        }
+    </style>
+
+    <script>
+
+function toggleText() {
+    const moreText = document.getElementById('more-text');
+    const readMoreBtn = document.getElementById('read-more-btn');
+
+    if (moreText.style.display === 'none') {
+        moreText.style.display = 'block';
+        readMoreBtn.innerHTML = 'Ver Menos';  // Altera o texto do botão
+    } else {
+        moreText.style.display = 'none';
+        readMoreBtn.innerHTML = 'Ver Mais';  // Restaura o texto do botão
+    }
+}
+
+        window.onload = function () {
+            disableScroll();
+            typeWriter();  // Chama a função para digitar o texto antes da animação da imagem
+        };
+
+        let isSpeakEnabled = false; // Inicialmente desativado
+
+        function disableScroll() {
+            document.body.style.overflow = 'hidden';
+        }
+
+        function enableScroll() {
+            document.body.style.overflow = 'auto';
+        }
+
+        function scrollDown() {
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+
+        // Função para digitar o texto letra por letra mais rápido
+        function typeWriter() {
+            const text = "Site feito por Luiz e Raf.";
+            let i = 0;
+            const element = document.getElementById("site-credit");
+            element.innerHTML = ''; // Limpa o conteúdo existente
+            element.style.display = 'block'; // Garante que o elemento esteja visível
+            const interval = setInterval(function () {
+                element.innerHTML += text.charAt(i); // Adiciona uma letra de cada vez
+                i++;
+                if (i === text.length) {
+                    clearInterval(interval); // Para o intervalo quando o texto for completamente escrito
+                    setTimeout(function () {
+                        eraseText(); // Chama a função para apagar o texto após a digitação
+                    }, 500); // Aguarda 500ms antes de apagar
+                }
+            }, 50); // Atraso reduzido para 50ms entre cada letra
+        }
+
+        // Função para apagar o texto letra por letra
+        function eraseText() {
+            const element = document.getElementById("site-credit");
+            let i = element.innerHTML.length;
+            const intervalErase = setInterval(function () {
+                element.innerHTML = element.innerHTML.slice(0, i - 1); // Remove a última letra
+                i--;
+                if (i === 0) {
+                    clearInterval(intervalErase); // Para o intervalo quando o texto for completamente apagado
+                    showImage(); // Chama a função para abrir a imagem após o texto ser apagado
+                }
+            }, 50); // Atraso reduzido para 50ms entre cada letra
+        }
+
+        // Função para abrir a imagem após o texto ser apagado
+        function showImage() {
+            const image = document.querySelector('.image');
+            const navbarBtn = document.querySelector('.navbar-btn');
+            const siteCredit = document.querySelector('.site-credit');
+            const scrollButton = document.querySelector('.scroll-button');
+
+            siteCredit.style.display = 'none'; // Esconde o texto de crédito
+
+            image.style.transform = 'scaleX(0)';
+            image.style.top = '-50vh';
+
+            setTimeout(function () {
+                image.style.transform = 'scaleX(1)';
+                image.style.height = '80vh';
+                image.style.top = '0';
+                image.classList.add('expanded');
+                image.style.borderBottom = '5px solid rgba(255, 255, 255, 0.6)';
+                navbarBtn.style.display = 'block';
+                scrollButton.classList.add('visible');
+                enableScroll(); // Habilita o scroll
+            }, 1000); // O efeito da imagem começa após 1 segundo
+        }
+
+        // Função para falar qualquer palavra clicada
+        function speakWord(word) {
+            if (isSpeakEnabled) {
+                const utterance = new SpeechSynthesisUtterance(word); // Cria o objeto de fala
+                window.speechSynthesis.speak(utterance); // Reproduz a fala
+            }
+        }
+
+        // Adiciona evento de clique em todas as palavras no conteúdo
+        document.addEventListener('DOMContentLoaded', function () {
+            const textElements = document.querySelectorAll('p, h2, .text-half'); // Seleciona os elementos de texto
+            textElements.forEach(function (element) {
+                element.addEventListener('click', function (event) {
+                    const word = event.target.textContent.trim();
+                    if (word) {
+                        speakWord(word); // Fala a palavra clicada
+                    }
+                });
+            });
+        });
+
+        // Função para alternar o estado de ativação da fala
+        function toggleSpeak() {
+            isSpeakEnabled = !isSpeakEnabled;
+            const button = document.getElementById("speak-toggle-btn");
+            if (isSpeakEnabled) {
+                button.classList.add('active'); // Adiciona a classe para ativar a cor verde
+            } else {
+                button.classList.remove('active'); // Remove a classe para voltar a cor vermelha
+            }
+        }
+
+
+    </script>
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
+
+    <div id="fb-root"></div>
+    <!-- Botão para ativar/desativar a fala -->
+    <button id="speak-toggle-btn" class="speak-toggle-btn" onclick="toggleSpeak()">
+        <span class="audio-icon">🔈</span>
+    </button>
+    
+    <!-- Botão para alterar a cor do texto e a imagem de fundo -->
+<!-- Botão para alternar entre temas -->
+<button id="change-theme-btn" class="change-theme-btn" onclick="toggleTheme()">🌞</button>
+
+<style>
+ /* Estilo para o botão de alterar tema */
+.change-theme-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 1001;
+    transition: background-color 0.3s ease;
+    border: none;
+}
+
+.change-theme-btn:hover {
+    background-color: #444;
+}
+
+</style>
+
+<script>
+    let isDarkMode = false; // Inicialmente, o tema é claro
+
+// Função para alternar entre o tema claro e o escuro
+function toggleTheme() {
+    const elements = document.querySelectorAll('p, h2, .text-half, .image-half img');
+    const backgroundImage = document.querySelector('.background-image');
+    const button = document.getElementById("change-theme-btn");
+
+    // Alterando o tema (escuro ou claro)
+    if (isDarkMode) {
+        // Tema Claro
+        elements.forEach(function (element) {
+            element.style.color = 'black'; // Cor do texto para preto
+        });
+        backgroundImage.style.backgroundImage = "url('2.jpg')"; // Imagem de fundo normal
+        backgroundImage.style.opacity = 0.3; // Opacidade da imagem de fundo
+        button.innerHTML = "🌞"; // Ícone de sol
+    } else {
+        // Tema Escuro
+        elements.forEach(function (element) {
+            element.style.color = 'white'; // Cor do texto para branco
+        });
+        backgroundImage.style.backgroundImage = "url('2.jpg')"; // Imagem de fundo (você pode mudar a imagem para um fundo mais escuro, se quiser)
+        backgroundImage.style.opacity = 1; // Opacidade da imagem de fundo
+        button.innerHTML = "🌙"; // Ícone de lua
+    }
+
+    // Alterna o estado do tema
+    isDarkMode = !isDarkMode;
+}
+
+</script>
+</body>
+
+</html>

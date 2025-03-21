@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
+
+    <div id="fb-root"></div>
+    <div class="contact-container">
+        <h1>Entre em Contato</h1>
+
+        <!-- Modifiquei o formulário para usar o Formspree e adicionar o redirecionamento -->
+        <form id="contact-form" action="https://formspree.io/f/{your-form-id}" method="POST" class="contact-form" onsubmit="handleSubmit(event)">
+            <div class="form-group">
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" placeholder="Digite seu nome" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Mensagem:</label>
+                <textarea id="message" name="message" placeholder="Digite sua mensagem" required></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Enviar</button>
+        </form>
+    </div>
+
+    <div class="background-image"></div>
+
+    <!-- Contêiner para os botões de aumentar e diminuir fonte, para colocá-los lado a lado -->
+    <div class="font-buttons">
+        <button id="increase-font-btn" class="font-btn" onclick="changeFontSize(2)">+</button>
+        <button id="decrease-font-btn" class="font-btn" onclick="changeFontSize(-2)">-</button>
+    </div>
+
+    <!-- Botão para alternar entre temas -->
+    <button id="change-theme-btn" class="change-theme-btn" onclick="toggleTheme()">🌞</button>
+
+    <!-- Botão para voltar ao menu -->
+    <button id="back-to-menu-btn" class="back-to-menu-btn" onclick="window.location.href='index.html';">Voltar ao Menu</button>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .contact-container {
+            width: 80%;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            padding: 12px 20px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://img.freepik.com/vector-premium/fondo-vector-abstracto-geometrico-japones_475148-1149.jpg?w=2000');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilo para o botão de alterar tema */
+        .change-theme-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #000;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1001;
+            transition: background-color 0.3s ease;
+            border: none;
+        }
+
+        .change-theme-btn:hover {
+            background-color: #444;
+        }
+
+        /* Contêiner para os botões de aumentar e diminuir a fonte */
+        .font-buttons {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex; /* Alinha os botões lado a lado */
+            gap: 10px; /* Espaçamento entre os botões */
+            z-index: 1000;
+        }
+
+        /* Estilo para os botões de aumentar e diminuir fonte */
+        .font-btn {
+            background-color: #000;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: none;
+        }
+
+        .font-btn:hover {
+            background-color: #444;
+        }
+
+        /* Estilo para o botão de voltar ao menu */
+        .back-to-menu-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: #000000; /* Cor verde */
+            color: #fff;
+            padding: 12px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: none;
+            z-index: 1000; /* Para garantir que o botão fique acima de outros elementos */
+        }
+
+        .back-to-menu-btn:hover {
+            background-color: #0056b3; /* Cor verde escuro ao passar o mouse */
+        }
+    </style>
+
+    <script>
+        let isDarkMode = false; // Inicialmente, o tema é claro
+        let fontSize = 16; // Tamanho da fonte inicial
+
+        // Função para alternar entre o tema claro e o escuro
+        function toggleTheme() {
+            const elements = document.querySelectorAll('p, h2, .text-half, .image-half img');
+            const backgroundImage = document.querySelector('.background-image');
+            const button = document.getElementById("change-theme-btn");
+
+            // Alterando o tema (escuro ou claro)
+            if (isDarkMode) {
+                // Tema Claro
+                elements.forEach(function (element) {
+                    element.style.color = 'black'; // Cor do texto para preto
+                });
+                backgroundImage.style.backgroundImage = "url('2.jpg')"; // Imagem de fundo normal
+                backgroundImage.style.opacity = 0.3; // Opacidade da imagem de fundo
+                button.innerHTML = "🌞"; // Ícone de sol
+            } else {
+                // Tema Escuro
+                elements.forEach(function (element) {
+                    element.style.color = 'white'; // Cor do texto para branco
+                });
+                backgroundImage.style.backgroundImage = "url('2.jpg')"; // Imagem de fundo (você pode mudar a imagem para um fundo mais escuro, se quiser)
+                backgroundImage.style.opacity = 1; // Opacidade da imagem de fundo
+                button.innerHTML = "🌙"; // Ícone de lua
+            }
+
+            // Alterna o estado do tema
+            isDarkMode = !isDarkMode;
+        }
+
+        // Função para aumentar ou diminuir o tamanho da fonte
+        function changeFontSize(change) {
+            fontSize += change;
+            if (fontSize < 12) fontSize = 12; // Limita o tamanho mínimo da fonte
+            if (fontSize > 30) fontSize = 30; // Limita o tamanho máximo da fonte
+            document.body.style.fontSize = fontSize + "px"; // Aplica o novo tamanho à página
+        }
+
+        // Função para redirecionar após o envio do formulário
+        function handleSubmit(event) {
+            event.preventDefault(); // Previne o envio do formulário
+            // Simulando sucesso no envio e redirecionando para a página
+            setTimeout(function() {
+                window.location.href = 'index4.html'; // Redireciona para index4.html
+            }, 1000); // Atraso de 1 segundo antes de redirecionar
+        }
+    </script>
+
+</body>
+
+</html>
